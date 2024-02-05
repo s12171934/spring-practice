@@ -1,6 +1,6 @@
 let rsp = ["/rock.png", "/scissors.png", "/paper.png"];
 
-function fetchResult(you, computer) {
+function fetchResult(you, computerNum) {
   let result = fetch("http://localhost:8080/rsp", {
     method: "POST",
     headers: {
@@ -8,7 +8,7 @@ function fetchResult(you, computer) {
     },
     body: JSON.stringify({
       you: you.src,
-      computer: computer.src,
+      computer: computerNum,
     }),
   })
     .then((res) => res.json())
@@ -37,8 +37,9 @@ document.querySelector("#form").addEventListener("click", async (event) => {
   let you = document.querySelector("#you").firstElementChild;
   let computer = document.querySelector("#computer").firstElementChild;
   you.src = event.target.src;
-  computer.src = rsp[Math.floor(Math.random() * 3)];
-  fetchResult(you, computer);
+  let computerNum = Math.floor(Math.random() * 3);
+  computer.src = rsp[computerNum];
+  fetchResult(you, computerNum);
 });
 
 fetchRefresh();

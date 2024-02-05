@@ -15,7 +15,7 @@ public class Round {
     public String getYou() {
         return you;
     }
-    
+
     public String getComputer() {
         return computer;
     }

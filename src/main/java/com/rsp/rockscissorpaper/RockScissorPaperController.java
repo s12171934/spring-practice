@@ -10,30 +10,23 @@ import org.springframework.web.bind.annotation.*;
 public class RockScissorPaperController {
     @PostMapping
     public Result calculateWinner(@RequestBody Round round, HttpServletRequest req){
-        String you;
-        String computer;
+        int you = 0;
+        int computer = Integer.parseInt(round.getComputer());
         if(round.getYou().contains("rock")){
-            you = "rock";
+            you = 0;
         } else if(round.getYou().contains("scissors")){
-            you = "scissors";
+            you = 1;
         } else{
-            you = "paper";
-        }
-        if(round.getComputer().contains("rock")){
-            computer = "rock";
-        } else if(round.getComputer().contains("scissors")){
-            computer = "scissors";
-        } else{
-            computer = "paper";
+            you = 2;
         }
 
         HttpSession session = req.getSession();
         Result result = getSessionOrDefault(session);
-        if(you.equals(computer)){
+        if(you == computer){
             result.setDraw(result.getDraw() + 1);
-        } else if((you.equals("rock") && computer.equals("scissors"))
-                ||(you.equals("scissors") && computer.equals("paper"))
-                ||(you.equals("paper") && computer.equals("rock"))){
+        } else if((you == 0 && computer == 1)
+                ||(you == 1 && computer == 2)
+                ||(you == 2 && computer == 0)){
             result.setWinner("#you");
             result.setWin(result.getWin() + 1);
         } else {
