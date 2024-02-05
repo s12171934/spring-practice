@@ -16,10 +16,6 @@ public class Result {
     public Result() {
     }
 
-    public String getWinner() {
-        return winner;
-    }
-
     public void setWinner(String winner) {
         this.winner = winner;
     }

@@ -10,8 +10,17 @@ function fetchResult(you, computer) {
       you: you.src,
       computer: computer.src,
     }),
-  }).then((res) => res.json());
-  return result;
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      if (result.winner) {
+        document.querySelector(".winner").className = "";
+        document.querySelector(result.winner).className = "winner";
+      }
+      document.querySelector("#win").innerHTML = result.win;
+      document.querySelector("#lose").innerHTML = result.lose;
+      document.querySelector("#draw").innerHTML = result.draw;
+    });
 }
 
 function fetchRefresh() {
@@ -29,14 +38,7 @@ document.querySelector("#form").addEventListener("click", async (event) => {
   let computer = document.querySelector("#computer").firstElementChild;
   you.src = event.target.src;
   computer.src = rsp[Math.floor(Math.random() * 3)];
-  let result = await fetchResult(you, computer);
-  if (result.winner) {
-    document.querySelector(".winner").className = "";
-    document.querySelector(result.winner).className = "winner";
-  }
-  document.querySelector("#win").innerHTML = result.win;
-  document.querySelector("#lose").innerHTML = result.lose;
-  document.querySelector("#draw").innerHTML = result.draw;
+  fetchResult(you, computer);
 });
 
 fetchRefresh();

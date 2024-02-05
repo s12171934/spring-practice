@@ -15,16 +15,9 @@ public class Round {
     public String getYou() {
         return you;
     }
-
-    public void setYou(String you) {
-        this.you = you;
-    }
-
+    
     public String getComputer() {
         return computer;
     }
 
-    public void setComputer(String computer) {
-        this.computer = computer;
-    }
 }

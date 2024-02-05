@@ -1,6 +1,7 @@
 package com.rsp.rockscissorpaper;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +45,7 @@ public class RockScissorPaperController {
     }
 
     @GetMapping
-    public Result refresh(HttpServletRequest req){
+    public Result refresh(HttpServletRequest req, HttpServletResponse resp){
         return getSessionOrDefault(req.getSession());
     }
 
