@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class RockScissorPaperController {
     @PostMapping
     public Result calculateWinner(@RequestBody Round round, HttpServletRequest req){
-        int you = 0;
+        int you;
         int computer = Integer.parseInt(round.getComputer());
         if(round.getYou().contains("rock")){
             you = 0;
