@@ -10,6 +10,6 @@ import java.util.List;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new IsLogin()).addPathPatterns(List.of("/login/logout","/login/afterlogin"));
+        registry.addInterceptor(new IsLoginInterceptor()).addPathPatterns(List.of("/login/logout","/login/afterlogin"));
     }
 }
