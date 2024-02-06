@@ -26,16 +26,16 @@ public class SImpleLoginController {
     }
     @GetMapping("/signup")
     public String signUpForm(){
-        return "redirect:/signup.html";
+        return "redirect:/signup/signup.html";
     }
     @GetMapping("/success")
-    public String loginSuccess(){return "redirect:/login-success.html";}
+    public String loginSuccess(){return "redirect:/login/login-success.html";}
     @GetMapping("/fail")
-    public String loginFail(){return "redirect:/login-fail.html";}
+    public String loginFail(){return "redirect:/login/login-fail.html";}
     @GetMapping("/logout")
-    public String logoutForm(){return "redirect:/logout.html";}
+    public String logoutForm(){return "redirect:/login/logout.html";}
     @GetMapping("/afterlogin")
-    public String afterLogin(){return "redirect:/after-index.html";}
+    public String afterLogin(){return "redirect:/login/after-index.html";}
 
     @PostMapping("")
     public String login(@Valid LoginForm loginForm, Errors errors, HttpServletRequest request, HttpServletResponse response){
@@ -60,7 +60,7 @@ public class SImpleLoginController {
             return "redirect:/login/signup";
         } else{
             memberList.put(member.getEmail(),member);
-            return "redirect:/signup-success.html";
+            return "redirect:/signup/signup-success.html";
         }
     }
     @PostMapping("/logout")
