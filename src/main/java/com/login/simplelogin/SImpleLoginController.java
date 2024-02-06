@@ -33,9 +33,9 @@ public class SImpleLoginController {
     @GetMapping("/fail")
     public String loginFail(){return "redirect:/login-fail.html";}
     @GetMapping("/logout")
-    public String logoutForm(HttpServletRequest request){return isLogin(request) ? "redirect:/logout.html" : "redirect:/login";}
+    public String logoutForm(){return "redirect:/logout.html";}
     @GetMapping("/afterlogin")
-    public String afterLogin(HttpServletRequest request){return isLogin(request) ? "redirect:/after-index.html" : "redirect:/login";}
+    public String afterLogin(){return "redirect:/after-index.html";}
 
     @PostMapping("")
     public String login(@Valid LoginForm loginForm, Errors errors, HttpServletRequest request, HttpServletResponse response){
