@@ -2,10 +2,11 @@ package com.login.simplelogin;
 
 import com.login.simplelogin.dto.LoginForm;
 import com.login.simplelogin.dto.Member;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import jakarta.websocket.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,26 +22,38 @@ public class SImpleLoginController {
 
     @GetMapping("")
     public String loginForm(){
-        return "redirect:/login.html";
+        return "redirect:/index.html";
     }
     @GetMapping("/signup")
     public String signUpForm(){
         return "redirect:/signup.html";
     }
+    @GetMapping("/success")
+    public String loginSuccess(){return "redirect:/login-success.html";}
+    @GetMapping("/fail")
+    public String loginFail(){return "redirect:/login-fail.html";}
+    @GetMapping("/logout")
+    public String logoutForm(HttpServletRequest request){return isLogin(request) ? "redirect:/logout.html" : "redirect:/login";}
+    @GetMapping("/afterlogin")
+    public String afterLogin(HttpServletRequest request){return isLogin(request) ? "redirect:/after-index.html" : "redirect:/login";}
+
     @PostMapping("")
-    public String login(@Valid LoginForm loginForm, Errors errors, HttpServletRequest request){
+    public String login(@Valid LoginForm loginForm, Errors errors, HttpServletRequest request, HttpServletResponse response){
         boolean isFail = errors.hasErrors()
                 || !memberList.containsKey(loginForm.getEmail())
                 || !memberList.get(loginForm.getEmail()).getPassword().equals(loginForm.getPassword());
         if(isFail){
-            return "redirect:/login-fail.html";
+            return "redirect:/login/fail";
         } else{
             HttpSession session = request.getSession();
             session.setAttribute("member",memberList.get(loginForm.getEmail()));
-            return "redirect:/after-login.html";
+            Cookie cookie = new Cookie("email", loginForm.getEmail());
+            cookie.setPath("/");
+            cookie.setMaxAge(loginForm.isSaveEmail() ? 60 * 60 : 0);
+            response.addCookie(cookie);
+            return "redirect:/login/success";
         }
     }
-
     @PostMapping("/signup")
     public String signUp(@Valid Member member, Errors errors){
         boolean isFail = errors.hasErrors()
@@ -53,5 +66,15 @@ public class SImpleLoginController {
             memberList.put(member.getEmail(),member);
             return "redirect:/signup-success.html";
         }
+    }
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.removeAttribute("member");
+        return "redirect:/login";
+    }
+    public boolean isLogin(HttpServletRequest request){
+       HttpSession session = request.getSession();
+       return session.getAttribute("member") != null;
     }
 }

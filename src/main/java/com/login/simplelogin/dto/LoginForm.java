@@ -13,4 +13,5 @@ public class LoginForm {
     @NotEmpty
     @Pattern(regexp = "(?=.*\\d)(?=.*[a-z]).{8,}")
     String password;
+    boolean saveEmail = false;
 }
