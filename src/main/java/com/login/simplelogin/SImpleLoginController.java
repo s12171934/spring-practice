@@ -45,12 +45,8 @@ public class SImpleLoginController {
         if(isFail){
             return "redirect:/login/fail";
         } else{
-            HttpSession session = request.getSession();
-            session.setAttribute("member",memberList.get(loginForm.getEmail()));
-            Cookie cookie = new Cookie("email", loginForm.getEmail());
-            cookie.setPath("/");
-            cookie.setMaxAge(loginForm.isSaveEmail() ? 60 * 60 : 0);
-            response.addCookie(cookie);
+            request.getSession().setAttribute("member",memberList.get(loginForm.getEmail()));
+            response.addCookie(saveEmail(loginForm.getEmail(),loginForm.isSaveEmail()));
             return "redirect:/login/success";
         }
     }
@@ -76,5 +72,11 @@ public class SImpleLoginController {
     public boolean isLogin(HttpServletRequest request){
        HttpSession session = request.getSession();
        return session.getAttribute("member") != null;
+    }
+    public Cookie saveEmail(String email, boolean isSave){
+        Cookie cookie = new Cookie("email", email);
+        cookie.setPath("/");
+        cookie.setMaxAge(isSave ? 60 * 60 : 0);
+        return cookie;
     }
 }
