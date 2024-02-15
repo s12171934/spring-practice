@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="airlineService"
+          class="com.kitri.springbasic.di.AirlineService" autowire="constructor">
+    </bean>
+    <bean id="hotelService" class="com.kitri.springbasic.di.HotelService" autowire="constructor">
+    </bean>
+    <bean id="greeting" class="com.kitri.springbasic.di.KoreanGreeting">
+    </bean>
+</beans>
